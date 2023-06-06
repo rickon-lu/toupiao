@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>投票系统</title>
+</head>
+<style>
+.text-center{
+    text-align: center;
+
+}
+body{
+    background-image: url("./bg.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+.row{
+    width: 1300px;
+    height: 400px;
+    text-align: center;
+    position: absolute;
+    left: 22%;
+    display: inline-block;
+}
+.card{
+    border: 1px solid #f899d0; /* 添加1像素的边框 */
+    border-radius: 5px; 
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.card-img-top{
+    width: 350px;
+    height: 400px;
+}
+.btn-primary {
+    width: 50px;
+    height: 40px;
+    font-size: 15px;
+    color: #fff; 
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    text-align: center;
+}
+.card-title {
+    margin-bottom: 0.5rem;
+    font-size: 20px;
+}
+.row {
+    display: flex;
+}
+</style>
+<body>
+  <div id="app" class="container">
+    <h1 class="text-center my-3">请选择您要投票的队伍</h1>
+    <div class="row">
+      <!-- 定义候选人组件，通过v-for循环遍历候选人列表 -->
+      <div class="col-md-4 mb-3" v-for="candidate in candidates" :key="candidate.id">
+        <div class="card">
+          <img :src="candidate.avatar" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ candidate.name }}</h5>
+            <p class="card-text">{{ candidate.description }}</p>
+            <button type="button" class="btn btn-primary" @click="vote(candidate.id)">投票</button>
+            <p class="mt-2">得票数：{{ candidate.votes }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="vue.js"></script>
+  <script>
+    // 定义候选人数据数组
+    const candidates = [
+      {
+        id: 1,
+        name: '上海龙之队',
+        avatar: './long1.jpeg',
+        description: '这是来自上海的owl队伍',
+        votes: 0
+      },
+      {
+        id: 2,
+        name: '杭州闪电队',
+        avatar: './hzs.jpg',
+        description: '这是来自杭州的owl队伍',
+        votes: 0
+      },
+      {
+        id: 3,
+        name: '广州冲锋队',
+        avatar: './gz.jpg',
+        description: '这是来自广州的owl队伍',
+        votes: 0
+      }
+    ];
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        candidates: candidates
+      },
+      methods: {
+        vote(id) {
+          // 根据传入的id找到对应的候选人对象
+          const candidate = this.candidates.find(candidate => candidate.id === id);
+          // 候选人得票数+1
+          candidate.votes++;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
